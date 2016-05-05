@@ -23,14 +23,15 @@ express.request._read = function _read(size) {
 const request = module.exports.request = function request(event) {
     http.IncomingMessage.call(this);
 
-    // Pending content body for middleware data source
-    this._internalData = event.body;
-    this._ptr = 0;
-
     // Original request data
     this.method = event.method;
     this.url = event.url;
     this.headers = event.headers;
+
+    // Pending content body for middleware data source
+    this._internalData = event.body;
+    this._ptr = 0;
+    this.headers['content-length'] = this._internalData.length;
 
     // http protocol info
     this.httpVersion = "1.1";
