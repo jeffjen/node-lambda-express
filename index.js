@@ -52,8 +52,14 @@ express.response.end = function end(data, encoding, callback) {
     this._implicitHeader();
     // Tell the pipeline I am done
     this.emit("finish");
-    // Invoke attached AWS Lambda handler callback with data
-    this.callback(null, { statusCode: this.statusCode, headers: this._headers, body: data.toString() });
+    let res = { statusCode: this.statusCode, headers: this._headers, body: data.toString() };
+    if (this.statusCode === 200) {
+        // Invoke attached AWS Lambda handler callback
+        this.callback(null, res);
+    } else {
+        // Invoke attached AWS Lambda handler error callback
+        this.callback(JSON.stringify(res), null);
+    }
 }
 
 const response = module.exports.response = function response(req, callback) {
