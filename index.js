@@ -27,6 +27,7 @@ const request = module.exports.request = function request(event) {
     this.method = event.method;
     this.url = event.url;
     this.headers = event.headers;
+    this.query = event.query;
 
     // Pending content body for middleware data source
     if (this.headers['content-type']) {
