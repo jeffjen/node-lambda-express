@@ -29,9 +29,12 @@ const request = module.exports.request = function request(event) {
     this.headers = event.headers;
 
     // Pending content body for middleware data source
-    this._internalData = event.body;
-    this._ptr = 0;
-    this.headers['content-length'] = this._internalData.length;
+    if (this.headers['content-type']) {
+        let body = event.body || "";
+        this.headers['content-length'] = body.length;
+        this._internalData = body;
+        this._ptr = 0;
+    }
 
     // http protocol info
     this.httpVersion = "1.1";
