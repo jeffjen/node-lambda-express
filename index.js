@@ -3,6 +3,7 @@
 const express = require("express");
 const http = require("http");
 const util = require("util");
+const fmt = require("string-format");
 
 // NOTE: An express.request is an augmented http.IncomingMessage
 // Internally http.IncommingMessage is a ReadableStream created by http.Server
@@ -25,7 +26,7 @@ const request = module.exports.request = function request(event) {
 
     // Original request data
     this.method = event.method;
-    this.url = event.url;
+    this.url = fmt(event.url, event.params);
     this.headers = event.headers;
     this.query = event.query;
 

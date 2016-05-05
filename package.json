@@ -9,6 +9,7 @@
   "author": "Jeffrey Jen <yihungjen@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "string-format": "^0.5.0"
   }
 }
